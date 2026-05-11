@@ -4,9 +4,26 @@ kind: ClusterConfig
 metadata:
   name: expense
   region: us-east-1
+  version: "1.34"
 
 managedNodeGroups:
-- name: expense
-  instanceType: m5.large
-  desiredCapacity: 3
-  spot: true
+  - name: expense-ng
+    instanceType: t3.medium
+    desiredCapacity: 2
+    minSize: 2
+    maxSize: 3
+
+    volumeSize: 20
+    amiFamily: AmazonLinux2023
+
+    ssh:
+      allow: true
+
+    labels:
+      environment: dev
+      project: expense
+
+    tags:
+      Name: expense-nodegroup
+
+    privateNetworking: false
